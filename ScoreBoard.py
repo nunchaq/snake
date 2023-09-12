@@ -1,10 +1,12 @@
 from turtle import Turtle
+import os
 
 
 class ScoreBoard(Turtle):
 
     font = ("Arial", 15, "normal")
     align = "center"
+    file_name = "high_score.txt"
 
     def __init__(self):
         super().__init__()
@@ -13,8 +15,13 @@ class ScoreBoard(Turtle):
         self.hideturtle()
         self.penup()
         self.setposition(0, 280)
-        with open("high_score.txt") as file:
-            self.high_score = int(file.read())
+
+        if os.path.getsize(self.file_name):
+            with open(self.file_name) as file:
+                self.high_score = int(file.read())
+        else:
+            self.high_score = 0
+
         self.write_score()
 
     def save_high_score_to_file(self):
